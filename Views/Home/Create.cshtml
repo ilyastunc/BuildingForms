@@ -1,0 +1,56 @@
+@model Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<br>
+
+<form asp-controller="Home" asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input asp-for="Name" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <input asp-for="Price" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="Category">Category</label>
+        @* static olarak kategori bilgilerini vermek için 
+        <select asp-for="Category" class="form-control">
+            <option selected disabled>Select Category</option>
+            <option>Category 1</option>
+            <option>Category 2</option>
+            <option>Category 3</option>
+            <option>Category 4</option> 
+        </select> *@
+
+        @* enum'dan alınan categori bilgilerini yazdırmak için
+        <select asp-for="Category" asp-items="@new SelectList(Enum.GetNames(typeof(CategoryEnum)))" class="form-control">
+            <option selected disabled>Select Category</option>
+        </select>*@
+
+        @* Controller'daki actiondan viewBag ile alınan categori bilgilerini yazdırmak için*@
+        <select asp-for="Category" asp-items="@ViewBag.Categories" class="form-control">
+            <option selected disabled>Select Category</option>
+        </select>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input" asp-for="isApproved" >
+        <label class="form-check-label">
+            is Approved
+        </label>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
